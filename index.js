@@ -75,6 +75,8 @@ const transform = function(elements, targets) {
             elements[i].rotateCentreX = target.rotateCentreX;
             elements[i].rotateCentreY = target.rotateCentreY;
             counter[i] = 0;
+            if (!done[i])
+                target.move(false);
             for (var j = 0; j < elements[i].points.length; j++) {
                 if (target.noAnimation) {
                     elements[i].points[j].x = target.points[j].x;
@@ -311,6 +313,7 @@ const generateSetTwo = function() {
                     sea.points[i].x = 0;
                 }
             }
+        } else {
             sea.noAnimation = false;
         }
     }

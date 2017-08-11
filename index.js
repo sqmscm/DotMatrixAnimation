@@ -31,7 +31,7 @@ var obj = function(setx, sety, setcolor) {
     return o;
 }
 
-const renderAll = () => {
+const renderAll = function() {
     if (objects.length == 0)
         return;
     drawBackground('#333333');
@@ -55,7 +55,7 @@ const renderAll = () => {
     }
 }
 
-const transform = (elements, targets) => {
+const transform = function(elements, targets) {
     if (targets.length == 0)
         return;
     var counter = [];
@@ -70,7 +70,7 @@ const transform = (elements, targets) => {
     for (var i = 0; i < elements.length; i++) {
         objects.push(elements[i]);
     }
-    const render = (targets) => {
+    const render = function(targets) {
         for (var i = 0; i < targets.length; i++) {
             var target = targets[i][current[i]];
             elements[i].rotate = target.rotate;
@@ -120,13 +120,13 @@ const transform = (elements, targets) => {
     render(targets);
 }
 
-const drawBackground = (color) => {
+const drawBackground = function(color) {
     canvas.height = canvas.height;
     context.fillStyle = color;
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-const blankElements = (objPerEdge, color) => {
+const blankElements = function(objPerEdge, color) {
     var elements = [];
     for (var i = 0; i < objPerEdge * objPerEdge; i++) {
         var t = obj(canvas.width / 2, canvas.height / 2, color);
@@ -135,7 +135,7 @@ const blankElements = (objPerEdge, color) => {
     return pointShape(elements, objPerEdge);
 }
 
-const generateSetOne = () => {
+const generateSetOne = function() {
     var objPerEdge = 20;
     //Rectangle
     var px = canvas.width / objPerEdge;
@@ -193,7 +193,7 @@ const generateSetOne = () => {
     tarList.push(bigTrap2);
     return tarList;
 }
-const generateSetTwo = () => {
+const generateSetTwo = function() {
     var objPerEdge = 20;
     var px = canvas.width / objPerEdge;
     var py = canvas.height / objPerEdge;
@@ -280,7 +280,7 @@ const generateSetTwo = () => {
     tarList.push(sea);
     return tarList;
 }
-const generateSetThree = () => {
+const generateSetThree = function() {
     var objPerEdge = 20;
     var px = canvas.width / objPerEdge;
     var py = canvas.height / objPerEdge;
@@ -356,8 +356,8 @@ const generateSetThree = () => {
     tarList.push(bigRhom2);
     return tarList;
 }
-const main = () => {
-    const resizeCanvas = () => {
+const main = function() {
+    const resizeCanvas = function() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         radius = canvas.width / 640;

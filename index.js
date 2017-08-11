@@ -86,7 +86,7 @@ const transform = function(elements, targets) {
                 if (Math.abs(elements[i].points[j].x - target.points[j].x) < 1 && Math.abs(elements[i].points[j].y - target.points[j].y) < 5) {
                     counter[i]++;
                 }
-                target.move(done[i]);
+                // target.move(done[i]);
             }
             if (counter[i] == elements[i].points.length) {
                 done[i] = true;
@@ -96,6 +96,7 @@ const transform = function(elements, targets) {
                         k = false;
                 }
                 if (k) {
+                    target.move(true);
                     if (timeCounter++ > (target.duration || 90)) {
                         for (var j = 0; j < current.length; j++) {
                             if (current[j] < targets[j].length - 1) {
@@ -171,11 +172,11 @@ const generateSetOne = function() {
     bigTrap2.move = function(done) {
         if (done) {
             if (bigTrap2.right) {
-                bigTrap2.rotate += 0.001;
+                bigTrap2.rotate += 1;
                 if (bigTrap2.rotate >= 10)
                     bigTrap2.right = false;
             } else {
-                bigTrap2.rotate -= 0.001;
+                bigTrap2.rotate -= 1;
                 if (bigTrap2.rotate <= -10)
                     bigTrap2.right = true;
             }
@@ -197,18 +198,29 @@ const generateSetOne = function() {
     generateSetOne.degree = 0;
     bigRect2.move = function(done) {
         if (done) {
-            bigRect2.rotate += 0.005;
+            bigRect2.rotate += 2;
             if (bigRect2.rotate == 360)
                 bigRect2.rotate = 0;
             generateSetOne.degree = bigRect2.rotate;
         }
     }
 
-    var tarList = [];
-    tarList.push(bigRect);
-    tarList.push(bigTrap);
-    tarList.push(bigTrap2);
-    tarList.push(bigRect2);
+    //Random
+    var random = [];
+    var ranx = (canvas.width >= canvas.height) ? (canvas.width / 40) : (canvas.width / 30),
+        rany = (canvas.width >= canvas.height) ? (canvas.height / 30) : (canvas.height / 40);
+    var scalex = (canvas.width >= canvas.height) ? 40 : 30;
+    var startx = ranx / 2,
+        starty = rany / 2;
+    for (var i = 0; i < objPerEdge * objPerEdge; i++) {
+        var randomx = Math.floor(Math.random() * scalex);
+        var randomy = Math.floor(Math.random() * 1200 / scalex);
+        var m = obj(startx + ranx * randomx, starty + rany * randomy, '#FFCC99')
+        random.push(m);
+    }
+    var randoms = pointShape(random, objPerEdge);
+
+    var tarList = [bigRect, bigTrap, bigTrap2, bigRect2, randoms];
     return tarList;
 }
 const generateSetTwo = function() {
@@ -227,7 +239,7 @@ const generateSetTwo = function() {
         var m = obj(rectx, recty, '#00CCFF');
         rhom.push(m);
     }
-    var bigRhom = pointShape(rhom, objPerEdge, 45, canvas.width / 2, canvas.height / 2);
+    var bigRhom = pointShape(rhom, objPerEdge, 45, rhom[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
 
     //Buildings
     var buildings = [];
@@ -282,7 +294,7 @@ const generateSetTwo = function() {
         if (done) {
             sea.noAnimation = true;
             for (var i = 0; i < 10 * 40; i++) {
-                sea.points[i].x += 0.01;
+                sea.points[i].x += 2;
                 if (sea.points[i].x > canvas.width) {
                     sea.points[i].x = 0;
                 }
@@ -299,7 +311,7 @@ const generateSetTwo = function() {
     var startx = canvas.width / 2 - 3.5 * rex,
         starty = canvas.height / 2 - 3 * rey;
     for (var i = 0; i < 8 * 50; i++) {
-        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FFCC99')
+        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#00CCFF')
         rect.push(m);
     }
     var bigRect2 = pointShape(rect, objPerEdge, 120, canvas.width / 2, canvas.height / 2);
@@ -308,12 +320,22 @@ const generateSetTwo = function() {
         if (done)
             bigRect2.rotate = generateSetOne.degree + 120;
     }
+    //Random
+    var random = [];
+    var ranx = (canvas.width >= canvas.height) ? (canvas.width / 40) : (canvas.width / 30),
+        rany = (canvas.width >= canvas.height) ? (canvas.height / 30) : (canvas.height / 40);
+    var scalex = (canvas.width >= canvas.height) ? 40 : 30;
+    var startx = ranx / 2,
+        starty = rany / 2;
+    for (var i = 0; i < objPerEdge * objPerEdge; i++) {
+        var randomx = Math.floor(Math.random() * scalex);
+        var randomy = Math.floor(Math.random() * 1200 / scalex);
+        var m = obj(startx + ranx * randomx, starty + rany * randomy, '#00CCFF')
+        random.push(m);
+    }
+    var randoms = pointShape(random, objPerEdge);
 
-    var tarList = [];
-    tarList.push(bigRhom);
-    tarList.push(builds);
-    tarList.push(sea);
-    tarList.push(bigRect2);
+    var tarList = [bigRhom, builds, sea, bigRect2, randoms];
     return tarList;
 }
 const generateSetThree = function() {
@@ -332,7 +354,7 @@ const generateSetThree = function() {
         var m = obj(rectx, recty, '#FF6699');
         rhom.push(m);
     }
-    var bigRhom = pointShape(rhom, objPerEdge, 45, canvas.width / 2, canvas.height / 2);
+    var bigRhom = pointShape(rhom, objPerEdge, 45, rhom[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
     //Buildings
     var buildings = [];
     var bx = (canvas.width - canvas.width * 0.4) / 8 / 8,
@@ -383,7 +405,7 @@ const generateSetThree = function() {
     var bigRhom2 = pointShape(rhom2, objPerEdge, 45, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
     bigRhom2.move = function(done) {
         if (done)
-            bigRhom2.rotate += 0.01;
+            bigRhom2.rotate += 4;
     }
 
     //Rectangle No.2
@@ -393,7 +415,7 @@ const generateSetThree = function() {
     var startx = canvas.width / 2 - 3.5 * rex,
         starty = canvas.height / 2 - 3 * rey;
     for (var i = 0; i < 8 * 50; i++) {
-        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FFCC99')
+        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FF6699')
         rect.push(m);
     }
     var bigRect2 = pointShape(rect, objPerEdge, 240, canvas.width / 2, canvas.height / 2);
@@ -403,11 +425,22 @@ const generateSetThree = function() {
             bigRect2.rotate = generateSetOne.degree + 240;
     }
 
-    var tarList = [];
-    tarList.push(bigRhom);
-    tarList.push(builds);
-    tarList.push(bigRhom2);
-    tarList.push(bigRect2);
+    //Random
+    var random = [];
+    var ranx = (canvas.width >= canvas.height) ? (canvas.width / 40) : (canvas.width / 30),
+        rany = (canvas.width >= canvas.height) ? (canvas.height / 30) : (canvas.height / 40);
+    var scalex = (canvas.width >= canvas.height) ? 40 : 30;
+    var startx = ranx / 2,
+        starty = rany / 2;
+    for (var i = 0; i < objPerEdge * objPerEdge; i++) {
+        var randomx = Math.floor(Math.random() * scalex);
+        var randomy = Math.floor(Math.random() * 1200 / scalex);
+        var m = obj(startx + ranx * randomx, starty + rany * randomy, '#FF6699')
+        random.push(m);
+    }
+    var randoms = pointShape(random, objPerEdge);
+
+    var tarList = [bigRhom, builds, bigRhom2, bigRect2, randoms];
     return tarList;
 }
 const main = function() {

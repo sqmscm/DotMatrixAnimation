@@ -183,6 +183,18 @@ const generateSetOne = function() {
         }
     }
 
+    //Rectangle No.1
+    var rect2 = [];
+    var rex = canvas.width / objPerEdge / 3,
+        rey = canvas.height / objPerEdge;
+    var startx = 0.5 * rex,
+        starty = 0.5 * rey;
+    for (var i = 0; i < 400; i++) {
+        var m = obj(startx + rex * (i % objPerEdge), starty + rey * Math.floor(i / objPerEdge), '#FFCC99')
+        rect2.push(m);
+    }
+    var bigRect1 = pointShape(rect2, objPerEdge);
+
     //Rectangle No.2
     var rect = [];
     var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
@@ -220,7 +232,7 @@ const generateSetOne = function() {
     }
     var randoms = pointShape(random, objPerEdge);
 
-    var tarList = [bigRect, bigTrap, bigTrap2, bigRect2, randoms];
+    var tarList = [bigRect, bigTrap, bigTrap2, bigRect1, bigRect2, randoms];
     return tarList;
 }
 const generateSetTwo = function() {
@@ -304,6 +316,18 @@ const generateSetTwo = function() {
         }
     }
 
+    //Rectangle No.1
+    var rect2 = [];
+    var rex = canvas.width / objPerEdge / 3,
+        rey = canvas.height / objPerEdge;
+    var startx = canvas.width / 3 + 0.5 * rex,
+        starty = 0.5 * rey;
+    for (var i = 0; i < 400; i++) {
+        var m = obj(startx + rex * (i % objPerEdge), starty + rey * Math.floor(i / objPerEdge), '#00CCFF')
+        rect2.push(m);
+    }
+    var bigRect1 = pointShape(rect2, objPerEdge);
+
     //Rectangle No.2
     var rect = [];
     var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
@@ -335,7 +359,7 @@ const generateSetTwo = function() {
     }
     var randoms = pointShape(random, objPerEdge);
 
-    var tarList = [bigRhom, builds, sea, bigRect2, randoms];
+    var tarList = [bigRhom, builds, sea, bigRect1, bigRect2, randoms];
     return tarList;
 }
 const generateSetThree = function() {
@@ -408,6 +432,18 @@ const generateSetThree = function() {
             bigRhom2.rotate += 4;
     }
 
+    //Rectangle No.1
+    var rect2 = [];
+    var rex = canvas.width / objPerEdge / 3,
+        rey = canvas.height / objPerEdge;
+    var startx = canvas.width * 2 / 3 + 0.5 * rex,
+        starty = 0.5 * rey;
+    for (var i = 0; i < 400; i++) {
+        var m = obj(startx + rex * (i % objPerEdge), starty + rey * Math.floor(i / objPerEdge), '#FF6699')
+        rect2.push(m);
+    }
+    var bigRect1 = pointShape(rect2, objPerEdge);
+
     //Rectangle No.2
     var rect = [];
     var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
@@ -440,7 +476,7 @@ const generateSetThree = function() {
     }
     var randoms = pointShape(random, objPerEdge);
 
-    var tarList = [bigRhom, builds, bigRhom2, bigRect2, randoms];
+    var tarList = [bigRhom, builds, bigRhom2, bigRect1, bigRect2, randoms];
     return tarList;
 }
 const main = function() {

@@ -171,8 +171,12 @@ const generateSetOne = function() {
     }
     var bigTrap2 = pointShape(trap, objPerEdge, 0, trap[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, trap[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
     bigTrap2.right = true;
+    bigTrap2.up = 0;
+    bigTrap2.isup = true;
+    bigTrap2.duration = 200;
     bigTrap2.move = function(done) {
         if (done) {
+            bigTrap2.noAnimation = true;
             if (bigTrap2.right) {
                 bigTrap2.rotate += 1;
                 if (bigTrap2.rotate >= 10)
@@ -182,6 +186,28 @@ const generateSetOne = function() {
                 if (bigTrap2.rotate <= -10)
                     bigTrap2.right = true;
             }
+            for (var i = 0; i < bigTrap2.points.length; i++) {
+                if (bigTrap2.isup)
+                    bigTrap2.points[i].y -= 4;
+                else {
+                    bigTrap2.points[i].y += 4;
+                }
+            }
+            if (bigTrap2.isup) {
+                bigTrap2.up++;
+                if (bigTrap2.up >= 6) {
+                    bigTrap2.isup = false;
+                    bigTrap2.up = 0;
+                }
+            } else {
+                bigTrap2.up--;
+                if (bigTrap2.up <= -6) {
+                    bigTrap2.isup = true;
+                    bigTrap2.up = 0;
+                }
+            }
+        } else {
+            bigTrap2.noAnimation = false;
         }
     }
 
@@ -304,6 +330,7 @@ const generateSetTwo = function() {
         drops.push(m);
     }
     var sea = pointShape(drops, objPerEdge);
+    sea.duration = 200;
     sea.move = function(done) {
         if (done) {
             sea.noAnimation = true;
@@ -429,6 +456,7 @@ const generateSetThree = function() {
         rhom2.push(m);
     }
     var bigRhom2 = pointShape(rhom2, objPerEdge, 45, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
+    bigRhom2.duration = 200;
     bigRhom2.move = function(done) {
         if (done) {
             bigRhom2.rotate += 5;

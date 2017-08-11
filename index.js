@@ -6,7 +6,7 @@ var log = console.log.bind(console);
 var canvas = document.getElementById('background');
 var context = canvas.getContext('2d');
 var objects = [];
-var radius = canvas.width / 640;
+var radius = (canvas.width > canvas.height) ? (canvas.width / 640) : (canvas.height / 640);
 var pointShape = function(pointsArray, pointsPerEdge, setRotate, setRotateCentreX, setRotateCentreY) {
     var o = {
         points: pointsArray || [],

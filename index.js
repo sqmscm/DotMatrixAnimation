@@ -308,7 +308,7 @@ const generateSetTwo = function() {
         if (done) {
             sea.noAnimation = true;
             for (var i = 0; i < 10 * 40; i++) {
-                sea.points[i].x += 2;
+                sea.points[i].x += 8;
                 if (sea.points[i].x > canvas.width) {
                     sea.points[i].x = 0;
                 }

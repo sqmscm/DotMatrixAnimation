@@ -311,7 +311,6 @@ const generateSetTwo = function() {
                     sea.points[i].x = 0;
                 }
             }
-        } else {
             sea.noAnimation = false;
         }
     }
@@ -428,8 +427,11 @@ const generateSetThree = function() {
     }
     var bigRhom2 = pointShape(rhom2, objPerEdge, 45, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
     bigRhom2.move = function(done) {
-        if (done)
-            bigRhom2.rotate += 4;
+        if (done) {
+            bigRhom2.rotate += 5;
+            if (bigRhom2.rotate >= 90)
+                bigRhom2.rotate = 0;
+        }
     }
 
     //Rectangle No.1

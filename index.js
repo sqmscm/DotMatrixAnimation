@@ -30,7 +30,6 @@ var obj = function(setx, sety, setcolor) {
     };
     return o;
 }
-
 const renderAll = function() {
     if (objects.length == 0)
         return;
@@ -54,7 +53,6 @@ const renderAll = function() {
         }
     }
 }
-
 const transform = function(elements, targets) {
     if (targets.length == 0)
         return;
@@ -98,7 +96,7 @@ const transform = function(elements, targets) {
                         k = false;
                 }
                 if (k) {
-                    if (timeCounter++ > 90) {
+                    if (timeCounter++ > (target.duration || 90)) {
                         for (var j = 0; j < current.length; j++) {
                             if (current[j] < targets[j].length - 1) {
                                 current[j]++;
@@ -119,13 +117,11 @@ const transform = function(elements, targets) {
     }
     render(targets);
 }
-
 const drawBackground = function(color) {
     canvas.height = canvas.height;
     context.fillStyle = color;
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
-
 const blankElements = function(objPerEdge, color) {
     var elements = [];
     for (var i = 0; i < objPerEdge * objPerEdge; i++) {
@@ -134,7 +130,6 @@ const blankElements = function(objPerEdge, color) {
     }
     return pointShape(elements, objPerEdge);
 }
-
 const generateSetOne = function() {
     var objPerEdge = 20;
     //Rectangle
@@ -187,10 +182,33 @@ const generateSetOne = function() {
         }
     }
 
+    //Rectangle No.2
+    var rect = [];
+    var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
+        rey = rex;
+    var startx = canvas.width / 2 - 3.5 * rex,
+        starty = canvas.height / 2 - 3 * rey;
+    for (var i = 0; i < 8 * 50; i++) {
+        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FFCC99')
+        rect.push(m);
+    }
+    var bigRect2 = pointShape(rect, objPerEdge, 0, canvas.width / 2, canvas.height / 2);
+    bigRect2.duration = 200;
+    generateSetOne.degree = 0;
+    bigRect2.move = function(done) {
+        if (done) {
+            bigRect2.rotate += 0.005;
+            if (bigRect2.rotate == 360)
+                bigRect2.rotate = 0;
+            generateSetOne.degree = bigRect2.rotate;
+        }
+    }
+
     var tarList = [];
     tarList.push(bigRect);
     tarList.push(bigTrap);
     tarList.push(bigTrap2);
+    tarList.push(bigRect2);
     return tarList;
 }
 const generateSetTwo = function() {
@@ -274,10 +292,28 @@ const generateSetTwo = function() {
         }
     }
 
+    //Rectangle No.2
+    var rect = [];
+    var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
+        rey = rex;
+    var startx = canvas.width / 2 - 3.5 * rex,
+        starty = canvas.height / 2 - 3 * rey;
+    for (var i = 0; i < 8 * 50; i++) {
+        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FFCC99')
+        rect.push(m);
+    }
+    var bigRect2 = pointShape(rect, objPerEdge, 120, canvas.width / 2, canvas.height / 2);
+    bigRect2.duration = 200;
+    bigRect2.move = function(done) {
+        if (done)
+            bigRect2.rotate = generateSetOne.degree + 120;
+    }
+
     var tarList = [];
     tarList.push(bigRhom);
     tarList.push(builds);
     tarList.push(sea);
+    tarList.push(bigRect2);
     return tarList;
 }
 const generateSetThree = function() {
@@ -344,16 +380,34 @@ const generateSetThree = function() {
         var m = obj(rectx, recty, '#FF6699');
         rhom2.push(m);
     }
-    var bigRhom2 = pointShape(rhom2, objPerEdge, 45, canvas.width * 0.075, canvas.height * 0.075);
+    var bigRhom2 = pointShape(rhom2, objPerEdge, 45, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].x, rhom2[objPerEdge * objPerEdge / 2 + objPerEdge / 2].y);
     bigRhom2.move = function(done) {
         if (done)
             bigRhom2.rotate += 0.01;
+    }
+
+    //Rectangle No.2
+    var rect = [];
+    var rex = Math.sqrt(canvas.height * canvas.height / 4 + canvas.width * canvas.width / 4) / 50,
+        rey = rex;
+    var startx = canvas.width / 2 - 3.5 * rex,
+        starty = canvas.height / 2 - 3 * rey;
+    for (var i = 0; i < 8 * 50; i++) {
+        var m = obj(startx + rex * (i % 8), starty - rey * Math.floor(i / 8), '#FFCC99')
+        rect.push(m);
+    }
+    var bigRect2 = pointShape(rect, objPerEdge, 240, canvas.width / 2, canvas.height / 2);
+    bigRect2.duration = 200;
+    bigRect2.move = function(done) {
+        if (done)
+            bigRect2.rotate = generateSetOne.degree + 240;
     }
 
     var tarList = [];
     tarList.push(bigRhom);
     tarList.push(builds);
     tarList.push(bigRhom2);
+    tarList.push(bigRect2);
     return tarList;
 }
 const main = function() {
